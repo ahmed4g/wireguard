@@ -95,7 +95,7 @@ EOF
     sudo wg-quick up wg0
     
     content=$(cat /etc/wireguard/client.conf)
-    echo -e "\033[43;42m Please Download /etc/wireguard/client.conf，The mobile phone can directly scan QR code \033[0m"
+    echo -e "\033[43;42m Please Download /etc/wireguard/client.conf，For mobile phone you can directly scan QR code \033[0m"
     echo "${content}" | qrencode -o - -t UTF8
 }
 
