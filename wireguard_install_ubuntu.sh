@@ -95,7 +95,7 @@ EOF
     sudo wg-quick up wg0
     
     content=$(cat /etc/wireguard/client.conf)
-    echo -e "\033[43;42m电脑端请下载/etc/wireguard/client.conf，手机端可直接使用软件扫码\033[0m"
+    echo -e "\033[43;42m Please Download /etc/wireguard/client.conf，The mobile phone can directly scan QR code \033[0m"
     echo "${content}" | qrencode -o - -t UTF8
 }
 
@@ -106,23 +106,23 @@ wireguard_remove(){
     sudo rm -rf /etc/wireguard
 
 }
-#开始菜单
+#Start Menu
 start_menu(){
     clear
     echo -e "\033[43;42m ====================================\033[0m"
-    echo -e "\033[43;42m 介绍：wireguard+udpspeeder+udp2raw  \033[0m"
-    echo -e "\033[43;42m 系统：Ubuntu                      \033[0m"
-    echo -e "\033[43;42m 作者：atrandys                      \033[0m"
-    echo -e "\033[43;42m 网站：www.atrandys.com              \033[0m"
+    echo -e "\033[43;42m Introduction：wireguard+udpspeeder+udp2raw  \033[0m"
+    echo -e "\033[43;42m system：Ubuntu                      \033[0m"
+    echo -e "\033[43;42m Author：atrandys                      \033[0m"
+    echo -e "\033[43;42m website：www.atrandys.com              \033[0m"
     echo -e "\033[43;42m Youtube：atrandys                   \033[0m"
     echo -e "\033[43;42m ====================================\033[0m"
     echo
-    echo -e "\033[0;33m 1. 安装wireguard\033[0m"
-    echo -e "\033[0;33m 2. 查看客户端二维码\033[0m"
-    echo -e "\033[0;31m 3. 删除wireguard\033[0m"
-    echo -e " 0. 退出脚本"
+    echo -e "\033[0;33m 1. installation wireguard\033[0m"
+    echo -e "\033[0;33m 2. View client QR code\033[0m"
+    echo -e "\033[0;31m 3. delete wireguard\033[0m"
+    echo -e " 0. Exit script"
     echo
-    read -p "请输入数字:" num
+    read -p "Please enter the number:" num
     case "$num" in
     1)
     wireguard_install
@@ -139,7 +139,7 @@ start_menu(){
     ;;
     *)
     clear
-    echo -e "请输入正确数字"
+    echo -e "Please enter the correct number"
     sleep 2s
     start_menu
     ;;
@@ -147,9 +147,3 @@ start_menu(){
 }
 
 start_menu
-
-
-
-
-
-
