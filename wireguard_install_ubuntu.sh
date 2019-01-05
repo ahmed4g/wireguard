@@ -106,6 +106,30 @@ wireguard_remove(){
     sudo rm -rf /etc/wireguard
 
 }
+
+add_user(){
+    echo -e "\033[37;41mGive a new user a name that cannot be repeated with an existing user\033[0m"
+    read -p "please enter user name：" newname
+    cd /etc/wireguard/client
+    cp client.conf $newname.conf
+    wg genkey | tee temprikey | wg pubkey > tempubkey
+    ipnum=$(grep Allowed /etc/wireguard/wg0.conf | tail -1 | awk -F '[ ./]' '{print $6}')
+    newnum=$((10#${ipnum}+1))
+    sed -i 's%^PrivateKey.*$%'"PrivateKey = $(cat temprikey)"'%' $newname.conf
+    sed -i 's%^Address.*$%'"Address = 10.0.0.$newnum\/24"'%' $newname.conf
+
+cat >> /etc/wireguard/wg0.conf <<-EOF
+[Peer]
+PublicKey = $(cat tempubkey)
+AllowedIPs = 10.0.0.$newnum/32
+EOF
+
+    content=$(cat $newname.conf)
+    echo -e "\033[37;41mAdd complete Please Download, file：/etc/wireguard/client/$newname.conf\033[0m"
+    echo -e "\033[37;41mFor mobile phone you can directly scan QR code\033[0m"
+    echo "${content}" | qrencode -o - -t UTF8
+}
+
 #Start Menu
 start_menu(){
     clear
@@ -120,6 +144,7 @@ start_menu(){
     echo -e "\033[0;33m 1. installation wireguard\033[0m"
     echo -e "\033[0;33m 2. View client QR code\033[0m"
     echo -e "\033[0;31m 3. delete wireguard\033[0m"
+    echo -e "\033[0;31m 4. Add user\033[0m"
     echo -e " 0. Exit script"
     echo
     read -p "Please enter the number:" num
@@ -133,6 +158,9 @@ start_menu(){
     ;;
     3)
     wireguard_remove
+    ;;
+    4)
+    add_user
     ;;
     0)
     exit 1
